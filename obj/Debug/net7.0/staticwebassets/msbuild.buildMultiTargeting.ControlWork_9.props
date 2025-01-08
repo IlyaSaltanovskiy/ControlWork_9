@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\ControlWork_9.props" />
+</Project>

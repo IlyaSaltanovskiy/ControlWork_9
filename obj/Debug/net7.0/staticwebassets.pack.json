@@ -1,0 +1,53 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\Илья\\RiderProjects\\controlwork_9_ilya_saltanovskiy\\ControlWork_9\\wwwroot\\adminHistory.html",
+      "PackagePath": "staticwebassets\\adminHistory.html"
+    },
+    {
+      "Id": "C:\\Users\\Илья\\RiderProjects\\controlwork_9_ilya_saltanovskiy\\ControlWork_9\\wwwroot\\adminPage.html",
+      "PackagePath": "staticwebassets\\adminPage.html"
+    },
+    {
+      "Id": "C:\\Users\\Илья\\RiderProjects\\controlwork_9_ilya_saltanovskiy\\ControlWork_9\\wwwroot\\historyPage.html",
+      "PackagePath": "staticwebassets\\historyPage.html"
+    },
+    {
+      "Id": "C:\\Users\\Илья\\RiderProjects\\controlwork_9_ilya_saltanovskiy\\ControlWork_9\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "C:\\Users\\Илья\\RiderProjects\\controlwork_9_ilya_saltanovskiy\\ControlWork_9\\wwwroot\\loginPage.html",
+      "PackagePath": "staticwebassets\\loginPage.html"
+    },
+    {
+      "Id": "C:\\Users\\Илья\\RiderProjects\\controlwork_9_ilya_saltanovskiy\\ControlWork_9\\wwwroot\\myProfile.html",
+      "PackagePath": "staticwebassets\\myProfile.html"
+    },
+    {
+      "Id": "C:\\Users\\Илья\\RiderProjects\\controlwork_9_ilya_saltanovskiy\\ControlWork_9\\wwwroot\\registerPage.html",
+      "PackagePath": "staticwebassets\\registerPage.html"
+    },
+    {
+      "Id": "C:\\Users\\Илья\\RiderProjects\\controlwork_9_ilya_saltanovskiy\\ControlWork_9\\wwwroot\\scripts\\script.js",
+      "PackagePath": "staticwebassets\\scripts\\script.js"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.ControlWork_9.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.build.ControlWork_9.props",
+      "PackagePath": "build\\ControlWork_9.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildMultiTargeting.ControlWork_9.props",
+      "PackagePath": "buildMultiTargeting\\ControlWork_9.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildTransitive.ControlWork_9.props",
+      "PackagePath": "buildTransitive\\ControlWork_9.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

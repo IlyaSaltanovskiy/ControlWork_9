@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Электронный Кошелек</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #4e54c8, #8f94fb);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            width: 80%;
+            max-width: 900px;
+        }
+
+        .container header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .account-info {
+            text-align: right;
+        }
+
+        .account-info span {
+            display: block;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+
+        .logout {
+            text-decoration: none;
+            color: #ff4c4c;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .logout:hover {
+            color: #c00;
+        }
+
+        iframe {
+            border: none;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        #historyFrame {
+            margin-top: 20px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #4e54c8;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #2e2fb2;
+        }
+
+        .result {
+            margin-top: 15px;
+            color: #d9534f;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <a href="/adminPage.html">Go to admin Page</a>
+        <div class="account-info">
+            <span>Номер счета: <span id="account_number">---</span></span>
+            <span>Баланс: <span id="balance">---</span> ₽</span>
+            <a href="#" id="logoutLink" class="logout">Выйти</a>
+        </div>
+    </header>
+    <div class="result" id="result"></div>
+    <iframe src="/index.html" style="width: 100%; height: 600px;">
+        Ваш браузер не поддерживает плавающие фреймы!
+    </iframe>
+    <iframe src="/historyPage.html" id="historyFrame" name="historyFrame" style="width: 100%; height: 500px;">
+        Ваш браузер не поддерживает плавающие фреймы!
+    </iframe>
+</div>
+
+<script>
+    document.getElementById('logoutLink').addEventListener('click', async function(event) {
+        event.preventDefault();
+        try {
+            const response = await fetch('/User/Logout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                alert("Вы вышли из системы!");
+                window.location.href = '/loginPage.html';
+            } else {
+                document.getElementById('result').innerText = `Ошибка: ${response.statusText}`;
+            }
+        } catch (error) {
+            document.getElementById('result').innerText = `Ошибка: ${error}`;
+        }
+    });
+
+    addEventListener("load", async (event) => {
+        try {
+            const response = await fetch('/User/GetCurrentUser', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            const result = await response.json();
+            document.getElementById('account_number').innerText = result.accountNumber || "Неизвестно";
+            document.getElementById('balance').innerText = result.balance || "0.00";
+        } catch (error) {
+            document.getElementById('result').innerText = `Ошибка: ${error}`;
+        }
+    });
+</script>
+</body>
+</html>

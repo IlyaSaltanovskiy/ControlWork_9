@@ -1,0 +1,262 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Электронный Кошелек - Перевод</title>
+    <style>
+        /* Общий стиль для страницы */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            flex-direction: column;
+        }
+
+        /* Контейнер для формы перевода */
+        .container {
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Заголовок */
+        h1 {
+            color: #333;
+            font-size: 28px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* Форма перевода */
+        form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* Инпуты для формы */
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        select:focus {
+            border-color: #6a11cb;
+        }
+
+        /* Кнопка отправки */
+        input[type="submit"] {
+            background-color: #6a11cb;
+            color: #fff;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #2575fc;
+        }
+
+        /* Секция результатов */
+        .result {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #d9534f;
+            text-align: center;
+        }
+
+        /* Выбор услуги */
+        .service-select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            margin-bottom: 20px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .service-select:focus {
+            border-color: #6a11cb;
+        }
+
+        /* Стиль для кнопок Login и Register */
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .auth-buttons a {
+            text-decoration: none;
+            background-color: #6a11cb;
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+
+        .auth-buttons a:hover {
+            background-color: #2575fc;
+        }
+
+        .auth-buttons a:active {
+            background-color: #1d4ba2;
+        }
+    </style>
+    <script>
+        function updateRecipientAccount() {
+            const serviceSelect = document.getElementById('serviceSelect');
+            const RecipiantAccountNumber = document.getElementById('RecipiantAccountNumber');
+            switch (serviceSelect.value) {
+                case 'electricity':
+                    RecipiantAccountNumber.value = '6864529989208';
+                    break;
+                case 'internet':
+                    RecipiantAccountNumber.value = '0278173536236';
+                    break;
+                case 'water':
+                    RecipiantAccountNumber.value = '1097533143322';
+                    break;
+                default:
+                    RecipiantAccountNumber.value = '';
+                    break;
+            }
+        }
+    </script>
+</head>
+<body>
+<!-- Кнопки логина и регистрации -->
+<div class="auth-buttons">
+    <a href="/registerPage.html">Register</a>
+    <a href="/loginPage.html">Log in</a>
+</div>
+
+<!-- Transfer Form -->
+<div class="container">
+    <h1>Send Money</h1>
+
+    <form id="transferForm">
+        <label for="RecipiantAccountNumber">To Account:</label>
+        <input type="text" id="RecipiantAccountNumber" name="RecipiantAccountNumber" required>
+
+        <label for="Amount">Amount:</label>
+        <input type="number" id="Amount" name="Amount" min="1" required>
+
+        <input type="submit" value="Send Money">
+    </form>
+
+    <form id="servicePaymentForm">
+        <label for="serviceSelect">Select Service:</label>
+        <select id="serviceSelect" name="serviceSelect" class="service-select" onchange="updateRecipientAccount()" required>
+            <option value="">--Select Service--</option>
+            <option value="electricity">Electricity</option>
+            <option value="internet">Internet</option>
+            <option value="water">Water</option>
+        </select>
+    </form>
+
+    <div class="result" id="result"></div>
+</div>
+
+<script>
+    document.getElementById('transferForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        const RecipiantAccountNumber = document.getElementById('RecipiantAccountNumber').value;
+        const Amount = document.getElementById('Amount').value;
+
+        const data = {
+            RecipiantAccountNumber: RecipiantAccountNumber,
+            Amount: parseFloat(Amount)
+        };
+
+        try {
+            const response = await fetch('/Transfer/SendMoney', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+            document.getElementById('result').innerText = JSON.stringify(result, null, 2);
+
+            try {
+                window.frames['historyFrame'].location.reload();
+            } catch (error) {
+                alert(error);
+            }
+        } catch (error) {
+            document.getElementById('result').innerText = `Error: ${error}`;
+        }
+    });
+
+    document.getElementById('servicePaymentForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        const serviceSelect = document.getElementById('serviceSelect').value;
+        const RecipiantAccountNumber = document.getElementById('RecipiantAccountNumber').value;
+        const AmountService = document.getElementById('AmountService').value;
+
+        const data = {
+            service: serviceSelect,
+            RecipiantAccountNumber: RecipiantAccountNumber,
+            Amount: parseFloat(AmountService)
+        };
+
+        try {
+            const response = await fetch('/Payment/PayService', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+            document.getElementById('result').innerText = JSON.stringify(result, null, 2);
+
+            try {
+                window.frames['historyFrame'].location.reload();
+            } catch (error) {
+                alert(error);
+            }
+        } catch (error) {
+            document.getElementById('result').innerText = `Error: ${error}`;
+        }
+    });
+</script>
+</body>
+</html>
